@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华光国瓷 · 内容创作助手</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c8a96e;--gold-dim:rgba(200,169,110,0.12);--gold-b:rgba(200,169,110,0.28);
+  --teal:#7aa89c;--teal-dim:rgba(122,168,156,0.1);
+  --ink:#1c160e;--ink2:#4a3e2a;--ink3:#8a7a60;
+  --cream:#f5f0e8;--parch:#ede5d8;--white:#faf8f4;--border:rgba(200,169,110,0.22);
+}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--cream);color:var(--ink);font-size:13px;line-height:1.6}
+.app{display:flex;flex-direction:column;min-height:100vh}
+.hd{display:flex;align-items:center;gap:14px;padding:14px 28px;border-bottom:1px solid var(--border);background:rgba(245,240,232,0.97);position:sticky;top:0;z-index:100}
+.seal{width:42px;height:42px;border-radius:3px;background:linear-gradient(135deg,#c8a96e,#9a6828);display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:11px;font-weight:700;color:#fff;writing-mode:vertical-rl;letter-spacing:1px;line-height:1.2;flex-shrink:0}
+.hd-t h1{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600}
+.hd-t p{font-size:10px;color:var(--ink3);letter-spacing:2px;margin-top:1px}
+.hd-badge{margin-left:auto;padding:4px 12px;background:var(--gold-dim);border-radius:20px;font-size:10px;color:var(--gold);letter-spacing:1px}
+.body{display:grid;grid-template-columns:360px 1fr;flex:1;min-height:calc(100vh - 65px)}
+.left{border-right:1px solid var(--border);overflow-y:auto;background:rgba(237,229,216,0.3);padding-bottom:24px}
+.sec{display:flex;align-items:center;gap:8px;padding:14px 18px 8px}
+.sec-icon{color:var(--gold);font-size:12px}
+.sec-title{font-size:10px;letter-spacing:2.5px;color:var(--gold);font-family:'Noto Serif SC',serif}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-sub{font-size:10px;color:var(--ink3)}
+.up-box{margin:0 18px;border:1.5px dashed var(--border);border-radius:8px;overflow:hidden;cursor:pointer;background:var(--white);transition:.2s}
+.up-box:hover{border-color:var(--gold);background:var(--gold-dim)}
+.up-ph{padding:18px;text-align:center}
+.up-ph .ico{font-size:22px;color:var(--gold);margin-bottom:6px}
+.up-ph p{font-size:12px;color:var(--ink2);line-height:1.7}
+.up-ph span{font-size:10px;color:var(--gold)}
+#up-img{width:100%;max-height:170px;object-fit:cover;display:block}
+#rm-btn{display:block;width:100%;padding:5px;text-align:center;font-size:11px;color:var(--ink3);background:none;border:none;border-top:1px solid var(--border);cursor:pointer}
+#rm-btn:hover{color:#c0392b}
+.dim-tabs{display:flex;margin:0 18px 10px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.dt{flex:1;padding:7px 4px;background:none;border:none;border-right:1px solid var(--border);cursor:pointer;font-size:10.5px;color:var(--ink3);transition:.15s;text-align:center;line-height:1.3;font-family:'Noto Sans SC',sans-serif}
+.dt:last-child{border-right:none}
+.dt:hover,.dt.on{background:var(--gold-dim);color:var(--gold);font-weight:500}
+.groups{padding:0 18px;display:flex;flex-direction:column;gap:12px}
+.gname{font-size:10.5px;color:var(--ink2);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.gname::before{content:'';display:inline-block;width:3px;height:3px;background:var(--gold);border-radius:50%}
+.gtip{font-size:9px;color:var(--ink3)}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{padding:5px 9px;border:1px solid var(--border);border-radius:4px;background:var(--white);color:var(--ink2);font-size:11px;cursor:pointer;transition:.15s;font-family:'Noto Sans SC',sans-serif;line-height:1.3}
+.tag:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.tag.on{border-color:var(--gold);background:var(--gold-dim);color:#8a6020;font-weight:500}
+.sel-box{margin:12px 18px 0;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:6px}
+.sel-title{font-size:9.5px;color:var(--ink3);letter-spacing:1.5px;margin-bottom:6px}
+.sel-tags{display:flex;flex-wrap:wrap;gap:4px}
+.stag{padding:3px 8px;background:var(--gold-dim);border-radius:20px;font-size:10px;color:var(--gold);cursor:pointer;display:flex;align-items:center;gap:3px}
+.stag:hover{background:rgba(200,169,110,0.25)}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 18px}
+.ct{padding:9px 8px;border:1px solid var(--border);border-radius:6px;background:var(--white);cursor:pointer;text-align:left;transition:.15s;font-family:'Noto Sans SC',sans-serif}
+.ct:hover,.ct.on{border-color:var(--gold);background:var(--gold-dim)}
+.ct-ico{font-size:12px;color:var(--gold);margin-bottom:2px}
+.ct-lbl{font-size:11px;color:var(--ink);font-weight:500;line-height:1.3}
+.ct-sub{font-size:9.5px;color:var(--ink3);margin-top:2px}
+.kw{padding:0 18px}
+textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:6px;background:var(--white);color:var(--ink);font-family:'Noto Sans SC',sans-serif;font-size:12px;resize:vertical;min-height:60px;outline:none;transition:.2s}
+textarea:focus{border-color:var(--gold)}
+textarea::placeholder{color:var(--ink3)}
+.gen-wrap{padding:16px 18px}
+#gen-btn{width:100%;padding:12px;background:linear-gradient(135deg,#c8a96e,#9a6828);color:#fff;border:none;border-radius:8px;font-family:'Noto Serif SC',serif;font-size:14px;font-weight:600;letter-spacing:2px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+#gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,169,110,0.35)}
+#gen-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.gen-hint{margin-top:6px;font-size:10px;color:var(--ink3);text-align:center}
+.right{overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:18px}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;color:var(--ink3);padding:60px 0}
+.empty-circle{width:80px;height:80px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:rgba(200,169,110,0.3)}
+.empty h3{font-family:'Noto Serif SC',serif;font-size:15px;color:var(--ink2)}
+.empty p{font-size:12px;line-height:1.9;max-width:280px}
+.steps{display:flex;flex-direction:column;gap:6px;margin-top:6px;text-align:left}
+.step{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink3)}
+.sn{width:18px;height:18px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.loading{display:flex;flex-direction:column;align-items:center;gap:12px;padding:80px 0}
+.spin{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.res-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.res-tags{display:flex;flex-wrap:wrap;gap:4px}
+.rtag{padding:3px 9px;border-radius:20px;font-size:10px}
+.rt-gold{background:var(--gold-dim);color:var(--gold)}
+.rt-teal{background:var(--teal-dim);color:var(--teal)}
+.rt-ink{background:rgba(28,22,14,0.06);color:var(--ink2)}
+.copy-btn{padding:5px 14px;border:1px solid var(--border);border-radius:5px;background:none;font-size:11px;color:var(--ink3);cursor:pointer;font-family:'Noto Sans SC',sans-serif;transition:.15s}
+.copy-btn:hover{border-color:var(--gold);color:var(--gold)}
+.card{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.card-h{padding:9px 15px;background:rgba(200,169,110,0.07);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:2px;color:var(--gold);font-family:'Noto Serif SC',serif}
+.card-b{padding:16px 15px;font-size:13px;line-height:2;color:var(--ink);white-space:pre-wrap}
+.card.meta{border-color:rgba(122,168,156,0.25)}
+.card.meta .card-h{background:rgba(122,168,156,0.08);border-color:rgba(122,168,156,0.2);color:var(--teal)}
+.divider{height:1px;background:var(--border)}
+.regen{padding:6px 16px;border:1px solid var(--border);border-radius:5px;background:none;font-size:11.5px;color:var(--ink3);cursor:pointer;font-family:'Noto Sans SC',sans-serif;transition:.15s;align-self:flex-start}
+.regen:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:768px){.body{grid-template-columns:1fr}.left{border-right:none;border-bottom:1px solid var(--border)}.right{padding:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hd">
+    <div class="seal">华光<br>国瓷</div>
+    <div class="hd-t"><h1>内容创作智能助手</h1><p>HUAGUANG NATIONAL PORCELAIN · CONTENT AGENT</p></div>
+    <div class="hd-badge">达摩盘式人群分析</div>
+  </header>
+  <div class="body">
+    <div class="left">
+      <div class="sec"><span class="sec-icon">⊕</span><span class="sec-title">产品图片</span><div class="sec-line"></div></div>
+      <div class="up-box" id="up-box" onclick="document.getElementById('file-input').click()">
+        <div class="up-ph" id="up-ph"><div class="ico">⊕</div><p>上传产品图片<br>AI将结合釉色、造型进行创作</p><span>JPG / PNG / WEBP</span></div>
+        <img id="up-img" style="display:none">
+        <button id="rm-btn" style="display:none" onclick="removeImg(event)">✕ 移除图片</button>
+      </div>
+      <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleImg(event)">
+      <div class="sec" style="margin-top:10px"><span class="sec-icon">◉</span><span class="sec-title">人群标签</span><div class="sec-line"></div><span class="sec-sub">多维圈选</span></div>
+      <div class="dim-tabs" id="dim-tabs"></div>
+      <div class="groups" id="tag-groups"></div>
+      <div class="sel-box" id="sel-box" style="display:none">
+        <div class="sel-title">已选标签 <span id="sel-count" style="color:var(--gold)"></span></div>
+        <div class="sel-tags" id="sel-tags"></div>
+      </div>
+      <div class="sec" style="margin-top:14px"><span class="sec-icon">▷</span><span class="sec-title">内容类型</span><div class="sec-line"></div></div>
+      <div class="ct-grid" id="ct-grid"></div>
+      <div class="sec" style="margin-top:14px"><span class="sec-icon">◇</span><span class="sec-title">产品关键词</span><div class="sec-line"></div></div>
+      <div class="kw"><textarea id="kw" placeholder="输入产品系列名称、工艺亮点、核心卖点…&#10;例：华青瓷·千峰翠色、窑变天成、上合峰会元首用瓷"></textarea></div>
+      <div class="gen-wrap">
+        <button id="gen-btn" onclick="generate()">✦ 生成专属内容</button>
+        <div class="gen-hint" id="gen-hint">建议至少选择3-5个标签以获得更精准内容</div>
+      </div>
+    </div>
+    <div class="right" id="right">
+      <div class="empty" id="empty-state">
+        <div class="empty-circle">◈</div>
+        <h3>华光国瓷 · 内容创作引擎</h3>
+        <p>基于达摩盘人群标签体系，深度分析目标受众，创作匹配品牌气质的专属内容。</p>
+        <div class="steps">
+          <div class="step"><div class="sn">1</div><span>从四个维度选择人群标签（可跨维度组合）</span></div>
+          <div class="step"><div class="sn">2</div><span>选择内容类型</span></div>
+          <div class="step"><div class="sn">3</div><span>上传产品图片（可选）</span></div>
+          <div class="step"><div class="sn">4</div><span>填写关键词后点击生成</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const BRAND=`你是华光国瓷的专属内容创作智能助手。以下是品牌核心知识：
+【品牌定位】中国高端陶瓷领军品牌，始建于1961年，被誉为"当代国窑"。
+【荣誉背书】APEC 21国元首专用瓷、上合峰会元首用瓷、中南海/人民大会堂/钓鱼台收藏、英国皇室收藏、白宫/联合国大厦/好莱坞专用、CCTV《大国品牌》专题报道。
+【核心价值】传承国粹、匠心精神、国际视野、艺术与生活融合。
+【材质创新】天然矿物骨质瓷、华青瓷（窑变天成青色）、华玉瓷；无铅釉/抗菌釉国家发明专利；德国燃气自控窑炉、日本热滚压成型机、英国自动施釉线、意大利烤花窑炉。
+【设计团队】5位国家级陶瓷艺术大师+60名省市级大师+8个国家12位国际艺术大师。
+【产品系列】传世系列、仕家系列、生活系列、风尚系列、茗道/茗品系列、华玉女人瓷、国彩天姿、华青瓷·千峰翠色。
+【品牌语气】雅正庄重而不失温度，有文化厚度，融合诗意表达，避免浮夸销售腔。`;
+const DIMS={
+basic:{label:"基础特征",icon:"◉",groups:[
+{name:"性别",single:true,tags:["女性为主","男性为主","男女均衡"]},
+{name:"年龄段",single:true,tags:["18-24岁 Z世代","25-34岁 青年白领","35-44岁 中坚精英","45-54岁 成熟富裕","55岁以上 银发群体"]},
+{name:"地域",single:true,tags:["一线城市（北上广深）","新一线城市","二线省会城市","三四线城市"]},
+{name:"婚育状态",single:false,tags:["已婚有子","已婚未育","单身独居","空巢家庭"]}]},
+social:{label:"社会特征",icon:"◈",groups:[
+{name:"职业身份",single:false,tags:["企业高管/董事","政府/事业单位管理层","创业者/私营业主","专业人士（医/律/建筑）","高校教授/学者","高净值自由职业者"]},
+{name:"消费层级",single:true,tags:["超高净值（月消费1万+）","高消费（月消费5000+）","中高消费（月消费3000+）","中产消费"]},
+{name:"生活方式",single:false,tags:["精致生活主义者","传统文化爱好者","艺术/收藏爱好者","商务宴请社交达人","家居品质升级人群","茶道/香道发烧友"]},
+{name:"教育程度",single:true,tags:["本科及以上","硕士/博士","海归/双语人群"]}]},
+interest:{label:"兴趣偏好",icon:"◇",groups:[
+{name:"文化兴趣",single:false,tags:["国潮/国风爱好者","传统工艺/非遗关注者","博物馆/文博爱好者","书法/国画/金石","历史/人文社科阅读者"]},
+{name:"生活美学",single:false,tags:["新中式家居风格","极简主义审美","日式侘寂风格","奢华古典风格","现代东方融合风"]},
+{name:"内容渠道",single:false,tags:["小红书深度用户","抖音短视频用户","微信视频号用户","B站文化类用户","高端杂志/公众号读者"]},
+{name:"购物决策",single:true,tags:["品牌忠诚型","品质优先型","故事驱动型","口碑跟随型","理性比较型"]}]},
+purchase:{label:"消费行为",icon:"▷",groups:[
+{name:"购买场景",single:false,tags:["自用（日常升级）","商务礼赠","婚庆礼品/嫁妆","收藏投资","企业定制采购","酒店/会所采购","装饰摆件"]},
+{name:"消费动机",single:false,tags:["彰显品味与身份","传承文化情感","犒赏自己/仪式感","高质量日常使用","送礼有面子","投资保值增值"]},
+{name:"客单价意愿",single:true,tags:["500元以内","500-2000元","2000-5000元","5000-20000元","20000元以上"]},
+{name:"购买阶段",single:true,tags:["全新潜客（未接触）","了解未购买","首次购买","复购老客","高价值会员"]}]}
+};
+const CTS=[
+{id:"slogan",label:"品牌广告语",icon:"✦",desc:"3组主副标题"},
+{id:"xhs",label:"小红书种草",icon:"◎",desc:"标题+正文+话题"},
+{id:"weibo",label:"微博/朋友圈",icon:"◉",desc:"短平快+标签"},
+{id:"short_video",label:"短视频脚本",icon:"▷",desc:"15-30秒分镜"},
+{id:"brand_film",label:"品牌形象片",icon:"▶",desc:"60-90秒叙事"},
+{id:"product",label:"产品详情页",icon:"◈",desc:"各模块文案"},
+{id:"gift",label:"礼赠场景",icon:"◇",desc:"礼卡+朋友圈"},
+{id:"kol",label:"KOL口播稿",icon:"◆",desc:"自然口语脚本"}];
+const META=new Set(["人群深度洞察","内容创作策略","视觉方向建议"]);
+let activeDim="basic",selectedTags={basic:[],social:[],interest:[],purchase:[]},activeCt="xhs",imgBase64=null,imgType=null,lastResult=null;
+function init(){
+const tb=document.getElementById("dim-tabs");
+Object.entries(DIMS).forEach(([k,v])=>{const b=document.createElement("button");b.className="dt"+(k===activeDim?" on":"");b.innerHTML=`<div>${v.icon}</div><div>${v.label}</div>`;b.onclick=()=>{activeDim=k;renderDimTabs();renderGroups()};tb.appendChild(b)});
+renderGroups();
+const cg=document.getElementById("ct-grid");
+CTS.forEach(ct=>{const b=document.createElement("button");b.className="ct"+(ct.id===activeCt?" on":"");b.innerHTML=`<div class="ct-ico">${ct.icon}</div><div class="ct-lbl">${ct.label}</div><div class="ct-sub">${ct.desc}</div>`;b.onclick=()=>{activeCt=ct.id;document.querySelectorAll(".ct").forEach(x=>x.classList.remove("on"));b.classList.add("on")};cg.appendChild(b)});
+}
+function renderDimTabs(){const keys=Object.keys(DIMS);document.querySelectorAll(".dt").forEach((b,i)=>b.classList.toggle("on",keys[i]===activeDim))}
+function renderGroups(){
+const dim=DIMS[activeDim],el=document.getElementById("tag-groups");el.innerHTML="";
+dim.groups.forEach(g=>{const gd=document.createElement("div");const tip=g.single?"（单选）":"（多选）";gd.innerHTML=`<div class="gname">${g.name} <span class="gtip">${tip}</span></div><div class="tags"></div>`;el.appendChild(gd);const tw=gd.querySelector(".tags");
+g.tags.forEach(tag=>{const b=document.createElement("button");b.className="tag"+(selectedTags[activeDim].includes(tag)?" on":"");b.textContent=tag;b.onclick=()=>toggleTag(tag,g);tw.appendChild(b)})});
+}
+function toggleTag(tag,group){const arr=selectedTags[activeDim];
+if(arr.includes(tag)){selectedTags[activeDim]=arr.filter(t=>t!==tag)}else{if(group.single){selectedTags[activeDim]=arr.filter(t=>!group.tags.includes(t))}selectedTags[activeDim].push(tag)}
+renderGroups();renderSelected();updateHint()}
+function renderSelected(){const all=Object.values(selectedTags).flat(),box=document.getElementById("sel-box"),tc=document.getElementById("sel-tags"),cnt=document.getElementById("sel-count");
+if(!all.length){box.style.display="none";return}box.style.display="block";cnt.textContent=all.length+"个";tc.innerHTML="";
+all.forEach(tag=>{const s=document.createElement("span");s.className="stag";s.innerHTML=`${tag} <span style="opacity:.5">×</span>`;s.onclick=()=>removeTag(tag);tc.appendChild(s)})}
+function removeTag(tag){Object.keys(selectedTags).forEach(k=>{selectedTags[k]=selectedTags[k].filter(t=>t!==tag)});renderGroups();renderSelected();updateHint()}
+function updateHint(){const cnt=Object.values(selectedTags).flat().length;document.getElementById("gen-hint").textContent=cnt>0?`已选 ${cnt} 个人群标签`:"建议至少选择3-5个标签以获得更精准内容"}
+function handleImg(e){const file=e.target.files[0];if(!file)return;imgType=file.type||"image/jpeg";const r=new FileReader();r.onload=ev=>{const d=ev.target.result;imgBase64=d.split(",")[1];document.getElementById("up-img").src=d;document.getElementById("up-img").style.display="block";document.getElementById("up-ph").style.display="none";document.getElementById("rm-btn").style.display="block"};r.readAsDataURL(file)}
+function removeImg(e){e.stopPropagation();imgBase64=null;imgType=null;document.getElementById("up-img").style.display="none";document.getElementById("rm-btn").style.display="none";document.getElementById("up-ph").style.display="block";document.getElementById("file-input").value=""}
+function buildPrompt(){
+const tags=Object.entries(selectedTags).map(([k,arr])=>arr.length?`${DIMS[k].label}：${arr.join("、")}`:"").filter(Boolean).join("\n");
+const ct=CTS.find(c=>c.id===activeCt),kw=document.getElementById("kw").value.trim();
+const g={slogan:"输出3组广告语，每组：主标题（8字内）+ 副标题（20字内）+ 一句话诠释",xhs:"完整小红书文案：爆款标题（含emoji）+ 正文（300-500字，自然口语有层次）+ 结尾互动 + 5个话题标签",weibo:"3条风格不同的微博/朋友圈文案，每条100字内，含话题标签",short_video:"15-30秒短视频分镜脚本：画面+字幕/旁白+时长，附BGM风格建议",brand_film:"60-90秒品牌形象片脚本：叙事主线+分镜（场景/画面/旁白/音乐）+情感弧线说明",product:"产品详情页各模块：①首屏标题 ②核心卖点（3-4点）③工艺亮点 ④场景描述 ⑤品牌故事 ⑥行动号召",gift:"①精装礼盒内卡文案（正背面各一版）②朋友圈晒单文案 ③礼品说明卡文案",kol:"KOL口播稿（600-800字，自然口语，含开场钩子/产品介绍/个人感受/购买引导）"};
+return `${BRAND}
+
+【目标人群画像（多维标签）】
+${tags||"未指定，请根据华光国瓷核心受众自行判断"}
+${imgBase64?"【注意】用户已上传产品图片，请分析图片中陶瓷的造型、釉色、纹饰，将视觉信息融入内容创作。":""}
+${kw?`【产品关键词/卖点】${kw}`:""}
+【内容类型】${ct.label}
+
+【重要输出规则】
+1. 必须先完整写出"主创作"正文，这是最重要的部分，篇幅充足、内容完整，绝不能省略或截断。
+2. 辅助模块（人群洞察、创作策略、视觉建议）必须极简短，每条一句话，合计不超过150字，把篇幅优先留给正文。
+3. 严格按以下顺序和格式输出，每个模块用 ### 标题分隔。
+
+### ${ct.label}（主创作）
+${g[activeCt]}
+（务必写完整，不要截断）
+
+### 人群深度洞察
+极简，每条一句话：核心情感需求（1-2条）、最在意的价值点（1条）、适合的语言风格（1条）
+
+### 内容创作策略
+极简，1-2条核心原则，每条一句话
+
+### 视觉方向建议
+3条，每条一句话：色调/构图/氛围关键词
+
+再次提醒：正文务必完整充分，辅助模块务必精简。`;
+}
+function parseSections(text){return text.split(/###\s+/).slice(1).map(p=>{const l=p.trim().split("\n");return{title:l[0].trim(),body:l.slice(1).join("\n").trim()}}).filter(s=>s.title&&s.body)}
+async function generate(){
+const btn=document.getElementById("gen-btn");btn.disabled=true;btn.textContent="✦ 正在创作中…";
+const right=document.getElementById("right");right.innerHTML=`<div class="loading"><div class="spin"></div><div style="font-size:13px;color:var(--ink3)">正在分析人群，创作专属内容…</div></div>`;
+try{
+const res=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:buildPrompt(),imageBase64:imgBase64,imageType:imgType})});
+const data=await res.json();
+if(!res.ok)throw new Error(data.error||"请求失败");
+const text=data.text||"";if(!text)throw new Error("未获取到内容，请重试");
+lastResult=text;
+const sections=parseSections(text),allTags=Object.values(selectedTags).flat(),ct=CTS.find(c=>c.id===activeCt);
+let html=`<div class="res-bar"><div class="res-tags">${allTags.slice(0,6).map(t=>`<span class="rtag rt-gold">${t}</span>`).join("")}${allTags.length>6?`<span class="rtag rt-ink">+${allTags.length-6}</span>`:""}<span class="rtag rt-teal">${ct.label}</span></div><button class="copy-btn" onclick="copyAll()">复制全文</button></div>`;
+sections.forEach(({title,body})=>{const m=META.has(title);html+=`<div class="card${m?" meta":""}"><div class="card-h">${m?"◉":"✦"} ${title}</div><div class="card-b">${body.replace(/</g,"&lt;")}</div></div>`});
+html+=`<div class="divider"></div><button class="regen" onclick="generate()">↺ 重新生成</button>`;
+right.innerHTML=html;right.scrollTo({top:0,behavior:"smooth"});
+}catch(err){right.innerHTML=`<div style="padding:16px;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;color:#c0392b;font-size:13px">生成失败：${err.message}<br><br><button onclick="generate()" style="padding:6px 16px;border:1px solid #fecaca;border-radius:4px;background:none;cursor:pointer;color:#c0392b">重试</button></div>`}
+finally{btn.disabled=false;btn.innerHTML="✦ 生成专属内容"}
+}
+function copyAll(){if(!lastResult)return;navigator.clipboard.writeText(lastResult).then(()=>{const b=document.querySelector(".copy-btn");if(b){b.textContent="✓ 已复制";setTimeout(()=>b.textContent="复制全文",2000)}})}
+init();
+</script>
+</body>
+</html>

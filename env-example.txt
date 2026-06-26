@@ -1,0 +1,37 @@
+# ═══════════════════════════════════════════════════
+#  复制此文件为 .env，填入你的配置
+#  本项目内置 5 个模型，改 PROVIDER 一行即可切换
+# ═══════════════════════════════════════════════════
+
+# 选择服务商（5 选 1）：
+#   qwen      → 通义千问 VL（默认，能看图，国内稳定，免费额度多）
+#   doubao    → 豆包 Vision（能看图，视觉强；个人需企业认证或中转平台）
+#   kimi      → Kimi k2.5（能看图，中文文采强，擅长长文）
+#   deepseek  → DeepSeek（最便宜，但不能看图）
+#   anthropic → Claude（能看图，质量最高，海外需外网）
+PROVIDER=qwen
+
+# ── 通义千问 VL（推荐默认）──
+# 申请：https://bailian.console.aliyun.com → API-KEY
+QWEN_API_KEY=sk-填入你的通义千问密钥
+# QWEN_MODEL=qwen-vl-plus          # 或 qwen-vl-max（更强）
+
+# ── 豆包 Doubao（字节火山引擎）──
+# 申请：https://console.volcengine.com/ark → API Key
+# 注意：DOUBAO_MODEL 要填你在火山控制台开通的视觉模型接入点ID
+# DOUBAO_API_KEY=填入你的豆包密钥
+# DOUBAO_MODEL=doubao-seed-1-6-vision
+
+# ── Kimi（月之暗面）──
+# 申请：https://platform.moonshot.cn → API Key
+# 注意：要用 kimi-k2.5 及以上 或 moonshot-v1-*-vision 才能看图
+# KIMI_API_KEY=sk-填入你的Kimi密钥
+# KIMI_MODEL=kimi-k2.5
+
+# ── DeepSeek（最便宜，不能看图）──
+# DEEPSEEK_API_KEY=sk-填入你的DeepSeek密钥
+# DEEPSEEK_MODEL=deepseek-v4-flash
+
+# ── Anthropic Claude（海外，需外网，用美元）──
+# ANTHROPIC_API_KEY=sk-ant-填入你的密钥
+# CLAUDE_MODEL=claude-sonnet-4-6
